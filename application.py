@@ -1,4 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
+from flask import request
+
 app = Flask(__name__)
 
 
@@ -30,3 +32,17 @@ def take_to_subpath(sub_path):
 def display_key(api_key):
     print(api_key)
     return "done"
+
+
+@app.route("/home")
+def display_home():
+    return render_template('home.html', thing_to_say='hello')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        if request.form['username'] == "Admin":
+            print(request.form['username'])
+            return 'Login Success'
+    return 'login fail'
